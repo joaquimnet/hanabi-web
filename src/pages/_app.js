@@ -1,19 +1,22 @@
-import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react'
+import { ChakraProvider, ColorModeProvider } from '@chakra-ui/react';
+import { DarkModeSwitch } from '../components/DarkModeSwitch';
 
-import theme from '../theme'
+import theme from '../theme';
 
 function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider resetCSS theme={theme}>
       <ColorModeProvider
         options={{
-          useSystemColorMode: true,
+          useSystemColorMode: false,
+          initialColorMode: 'dark',
         }}
       >
         <Component {...pageProps} />
+        <DarkModeSwitch />
       </ColorModeProvider>
     </ChakraProvider>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

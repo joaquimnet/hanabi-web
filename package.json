@@ -13,6 +13,7 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "framer-motion": "^4.0.3",
+    "mongodb-client-encryption": "^1.2.5",
     "mongoose": "^5.12.14",
     "next": "^11.0.0",
     "next-auth": "^3.27.0",

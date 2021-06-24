@@ -1,7 +1,8 @@
-import { model, Schema } from 'mongoose';
+import mongoose, { model, Schema } from 'mongoose';
 
 const textSchema = new Schema(
   {
+    schemaVersion: { type: Number, default: 1 },
     label: {
       type: String,
       required: true,
@@ -18,7 +19,7 @@ const textSchema = new Schema(
       minLength: 1,
     },
   },
-  { timestamps: true },
+  { timestamps: true, optimisticConcurrency: true },
 );
 
 // required for mongoose on Next

@@ -5,6 +5,8 @@ import { DefaultSeo } from 'next-seo';
 
 import theme from '../theme';
 import SEO from '../next-seo.config';
+import ProgressBar from '../components/ProgressBar';
+import { Container } from '../components/Container';
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -16,7 +18,10 @@ function MyApp({ Component, pageProps }) {
         }}
       >
         <DefaultSeo {...SEO} />
-        <Component {...pageProps} />
+        <ProgressBar color="#7928CA" />
+        <Container>
+          <Component {...pageProps} />
+        </Container>
         <DarkModeSwitch />
       </ColorModeProvider>
     </ChakraProvider>

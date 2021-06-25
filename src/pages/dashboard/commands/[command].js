@@ -44,7 +44,7 @@ const Command = ({ command }) => {
           title: `Hanabi - ${command.name} command`,
           description: `The ${command.name} command. ${command.description}. It has a ${command.cooldown} seconds cooldown.`,
           url: `https://www.hanabi-bot.com/dashboard/commands/${command.name}`,
-          images: undefined,
+          images: [],
         }}
       />
       <Text

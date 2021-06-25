@@ -20,7 +20,7 @@ const Dashboard = ({ counts }) => {
           title: 'Hanabi - Dashboard',
           description: `Hanabi is bringing life to ${counts.guilds} servers with her ${counts.commands} commands and ${counts.listeners}.`,
           url: `https://www.hanabi-bot.com/dashboard`,
-          images: undefined,
+          images: [],
         }}
       />
       <Text

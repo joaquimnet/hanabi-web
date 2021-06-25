@@ -27,7 +27,7 @@ const CommandList = ({ commands }) => {
           title: 'Hanabi - Commands',
           description: `Hanabi will bring life to your server with her ${commands.length} commands.`,
           url: `https://www.hanabi-bot.com/dashboard/commands`,
-          images: undefined,
+          images: [],
         }}
       />
       <Text

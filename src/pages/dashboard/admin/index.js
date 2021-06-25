@@ -143,18 +143,19 @@ const Dashboard = ({ counts, alerts }) => {
   );
 };
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const req = await fetch(process.env.BOT_ENDPOINT + '/bot/counts', {
     headers: { Authorization: 'super secret' },
   });
   const counts = await req.json();
 
   await connect(() => {})();
-  const text = await Content.count({});
+  const text = await Content.countDocuments({});
 
   const alerts = await Alert.find({}).sort({ createdAt: -1 }).limit(5);
 
   return {
+    revalidate: 30,
     props: {
       counts: {
         ...counts,

@@ -1,3 +1,7 @@
 {
-  "extends": "next"
+  "extends": ["eslint:recommended", "next"],
+  "env": {
+    "node": true,
+    "browser": true
+  }
 }

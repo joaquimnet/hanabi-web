@@ -1,32 +1,21 @@
-import {
-  Link as ChakraLink,
-  Text,
-  Flex,
-  SimpleGrid,
-  Box,
-  useColorModeValue,
-  Code,
-  Alert as ChakraAlert,
-  AlertIcon,
-  Stack,
-  Button,
-  ButtonGroup,
-} from '@chakra-ui/react';
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { Text, SimpleGrid } from '@chakra-ui/react';
+import { NextSeo } from 'next-seo';
 
 import Content from '../../models/text';
 import Alert from '../../models/alert';
 import connect from '../../middleware/mongodb';
 
-import { Container } from '../../components/Container';
 import { Main } from '../../components/Main';
 import { Card } from '../../components/Card';
+import { DashboardLinks } from '../../components/DashboardLinks';
 
-const Dashboard = ({ counts, alerts }) => {
+const Dashboard = ({ counts }) => {
   return (
     <Main minHeight="100vh" pt="4rem">
+      <NextSeo
+        title="Hanabi - Dashboard"
+        description={`Hanabi is bringing life to ${counts.guilds} servers with her ${counts.commands} commands and ${counts.listeners}.`}
+      />
       <Text
         as="h1"
         fontSize="2rem"
@@ -38,59 +27,11 @@ const Dashboard = ({ counts, alerts }) => {
       >
         Dashboard
       </Text>
-      {/* <ButtonGroup>
-        <Button variant="outline" href="/" size="lg" onClick={() => push('/')}>
-          Home
-        </Button>
-      </ButtonGroup> */}
 
-      <Box fontSize="lg" m="0" d="flex" flexDirection="row">
-        <Box mx={2} _hover={{ color: '#FF0080' }}>
-          <Link href="/">Home</Link>
-        </Box>
-        <Box mx={2} _hover={{ color: '#FF0080' }}>
-          <a
-            href="https://top.gg/bot/750693579109695638/vote"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Vote for Hanabi
-          </a>
-        </Box>
-        <Box mx={2} _hover={{ color: '#FF0080' }}>
-          <a
-            href="https://discord.gg/6EHFcgMbcb"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Join Support Server
-          </a>
-        </Box>
-        <Box mx={2} _hover={{ color: '#FF0080' }}>
-          <a
-            href="https://discord.com/oauth2/authorize?client_id=750693579109695638&permissions=388160&scope=bot"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Invite Hanabi
-          </a>
-        </Box>
-        <Box mx={2} _hover={{ color: '#FF0080' }}>
-          <a
-            href="https://twitter.com/hanabi_dev"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Twitter
-          </a>
-        </Box>
-      </Box>
+      <DashboardLinks />
 
       <SimpleGrid columns={[1, 2]} spacing={5}>
-        <Card>
-          <Text fontWeight="extrabold" textTransform="uppercase">
-            Users
-          </Text>
+        <Card height="80px" title="Users">
           <Text
             fontWeight="extrabold"
             textTransform="uppercase"
@@ -99,10 +40,7 @@ const Dashboard = ({ counts, alerts }) => {
             {counts.users}
           </Text>
         </Card>
-        <Card>
-          <Text fontWeight="extrabold" textTransform="uppercase">
-            Servers
-          </Text>
+        <Card height="80px" title="Servers">
           <Text
             fontWeight="extrabold"
             textTransform="uppercase"
@@ -111,10 +49,7 @@ const Dashboard = ({ counts, alerts }) => {
             {counts.guilds}
           </Text>
         </Card>
-        <Card>
-          <Text fontWeight="extrabold" textTransform="uppercase">
-            Commands
-          </Text>
+        <Card height="80px" title="Commands" href="/dashboard/commands">
           <Text
             fontWeight="extrabold"
             textTransform="uppercase"
@@ -123,10 +58,7 @@ const Dashboard = ({ counts, alerts }) => {
             {counts.commands}
           </Text>
         </Card>
-        <Card>
-          <Text fontWeight="extrabold" textTransform="uppercase">
-            Listeners
-          </Text>
+        <Card height="80px" title="Listeners">
           <Text
             fontWeight="extrabold"
             textTransform="uppercase"
@@ -140,18 +72,22 @@ const Dashboard = ({ counts, alerts }) => {
   );
 };
 
-export async function getServerSideProps() {
-  const req = await fetch(process.env.BOT_ENDPOINT + '/bot/counts', {
-    headers: { Authorization: 'super secret' },
-  });
+export async function getStaticProps() {
+  const req = await fetch(
+    process.env.BOT_ENDPOINT + '/bot/counts?omitHidden=true',
+    {
+      headers: { Authorization: 'super secret' },
+    },
+  );
   const counts = await req.json();
 
   await connect(() => {})();
-  const text = await Content.count({});
+  const text = await Content.countDocuments({});
 
   const alerts = await Alert.find({}).sort({ createdAt: -1 }).limit(5);
 
   return {
+    revalidate: 30,
     props: {
       counts: {
         ...counts,

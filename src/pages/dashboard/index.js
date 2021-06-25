@@ -15,6 +15,10 @@ const Dashboard = ({ counts }) => {
       <NextSeo
         title="Hanabi - Dashboard"
         description={`Hanabi is bringing life to ${counts.guilds} servers with her ${counts.commands} commands and ${counts.listeners}.`}
+        openGraph={{
+          title: 'Hanabi - Dashboard',
+          description: `Hanabi is bringing life to ${counts.guilds} servers with her ${counts.commands} commands and ${counts.listeners}.`,
+        }}
       />
       <Text
         as="h1"

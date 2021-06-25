@@ -39,6 +39,10 @@ const Command = ({ command }) => {
       <NextSeo
         title={`Hanabi - ${command.name} command`}
         description={`The ${command.name} command. ${command.description}. It has a ${command.cooldown} seconds cooldown.`}
+        openGraph={{
+          title: `Hanabi - ${command.name} command`,
+          description: `The ${command.name} command. ${command.description}. It has a ${command.cooldown} seconds cooldown.`,
+        }}
       />
       <Text
         as="h1"

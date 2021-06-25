@@ -22,6 +22,10 @@ const CommandList = ({ commands }) => {
       <NextSeo
         title="Hanabi - Commands"
         description={`Hanabi will bring life to your server with her ${commands.length} commands.`}
+        openGraph={{
+          title: 'Hanabi - Commands',
+          description: `Hanabi will bring life to your server with her ${commands.length} commands.`,
+        }}
       />
       <Text
         as="h1"

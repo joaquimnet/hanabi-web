@@ -39,9 +39,19 @@ const Command = ({ command }) => {
       <NextSeo
         title={`Hanabi - ${command.name} command`}
         description={`The ${command.name} command. ${command.description}. It has a ${command.cooldown} seconds cooldown.`}
+        canonical={`https://www.hanabi-bot.com/dashboard/commands/${command.name}`}
         openGraph={{
           title: `Hanabi - ${command.name} command`,
           description: `The ${command.name} command. ${command.description}. It has a ${command.cooldown} seconds cooldown.`,
+          url: `https://www.hanabi-bot.com/dashboard/commands/${command.name}`,
+          images: [
+            {
+              url: 'https://cdn.discordapp.com/avatars/750693579109695638/59bf4faa1141194f01f136b27769d0f5.webp?size=512',
+              width: 64,
+              height: 64,
+              alt: "Hanabi's Profile Picture",
+            },
+          ],
         }}
       />
       <Text

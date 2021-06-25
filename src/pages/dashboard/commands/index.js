@@ -22,9 +22,19 @@ const CommandList = ({ commands }) => {
       <NextSeo
         title="Hanabi - Commands"
         description={`Hanabi will bring life to your server with her ${commands.length} commands.`}
+        canonical={`https://www.hanabi-bot.com/dashboard/commands`}
         openGraph={{
           title: 'Hanabi - Commands',
           description: `Hanabi will bring life to your server with her ${commands.length} commands.`,
+          url: `https://www.hanabi-bot.com/dashboard/commands`,
+          images: [
+            {
+              url: 'https://cdn.discordapp.com/avatars/750693579109695638/59bf4faa1141194f01f136b27769d0f5.webp?size=512',
+              width: 64,
+              height: 64,
+              alt: "Hanabi's Profile Picture",
+            },
+          ],
         }}
       />
       <Text

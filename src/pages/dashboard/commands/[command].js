@@ -46,7 +46,7 @@ const Command = ({ command }) => {
           url: `https://www.hanabi-bot.com/dashboard/commands/${command.name}`,
           images: [
             {
-              url: 'https://hanabi-bot.com/hana.png',
+              url: 'https://i.imgur.com/eVACxCm.png',
               width: 512,
               height: 128,
               alt: "Hanabi's name on a dark background.",

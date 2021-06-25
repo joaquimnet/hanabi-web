@@ -3,5 +3,8 @@
   "env": {
     "node": true,
     "browser": true
+  },
+  "rules": {
+    "no-unused-vars": "warn"
   }
 }

@@ -155,7 +155,7 @@ export async function getStaticProps() {
   const alerts = await Alert.find({}).sort({ createdAt: -1 }).limit(5);
 
   return {
-    revalidate: 30,
+    revalidate: 300,
     props: {
       counts: {
         ...counts,

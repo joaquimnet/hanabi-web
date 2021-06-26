@@ -2,7 +2,8 @@
   "extends": ["eslint:recommended", "next"],
   "env": {
     "node": true,
-    "browser": true
+    "browser": true,
+    "es6": true
   },
   "rules": {
     "no-unused-vars": "warn"

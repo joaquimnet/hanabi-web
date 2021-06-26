@@ -197,7 +197,7 @@ export async function getStaticProps({ params }) {
   });
 
   return {
-    revalidate: 30,
+    revalidate: 300,
     props: {
       command: JSON.parse(JSON.stringify(command)),
     },

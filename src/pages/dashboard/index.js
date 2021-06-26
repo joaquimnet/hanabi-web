@@ -46,39 +46,46 @@ const Dashboard = ({ counts }) => {
 
       <SimpleGrid columns={[1, 2]} spacing={5}>
         <Card height="80px" title="Users">
-          <Text
-            fontWeight="extrabold"
-            textTransform="uppercase"
-            fontSize="1.8rem"
-          >
+          <Text textTransform="uppercase" fontSize="1.8rem">
             {counts.users}
           </Text>
         </Card>
         <Card height="80px" title="Servers">
-          <Text
-            fontWeight="extrabold"
-            textTransform="uppercase"
-            fontSize="1.8rem"
-          >
+          <Text textTransform="uppercase" fontSize="1.8rem">
             {counts.guilds}
           </Text>
         </Card>
         <Card height="80px" title="Commands" href="/dashboard/commands">
-          <Text
-            fontWeight="extrabold"
-            textTransform="uppercase"
-            fontSize="1.8rem"
-          >
+          <Text textTransform="uppercase" fontSize="1.8rem">
             {counts.commands}
           </Text>
         </Card>
-        <Card height="80px" title="Listeners">
-          <Text
-            fontWeight="extrabold"
-            textTransform="uppercase"
-            fontSize="1.8rem"
-          >
+        <Card height="80px" title="Listeners" href="/dashboard/listeners">
+          <Text textTransform="uppercase" fontSize="1.8rem">
             {counts.listeners}
+          </Text>
+        </Card>
+      </SimpleGrid>
+      <Text
+        as="h2"
+        fontSize="1.5rem"
+        width="fit-content"
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
+        bgClip="text"
+        fontWeight="extrabold"
+        textTransform="uppercase"
+      >
+        Stats
+      </Text>
+      <SimpleGrid columns={[1, 2]} spacing={5}>
+        <Card height="80px" title="Command Uses">
+          <Text textTransform="uppercase" fontSize="1.8rem">
+            {counts.commandUses}
+          </Text>
+        </Card>
+        <Card height="80px" title="Listener Uses">
+          <Text textTransform="uppercase" fontSize="1.8rem">
+            {counts.listenerUses}
           </Text>
         </Card>
       </SimpleGrid>
@@ -87,13 +94,16 @@ const Dashboard = ({ counts }) => {
 };
 
 export async function getStaticProps() {
-  const req = await fetch(
-    process.env.BOT_ENDPOINT + '/bot/counts?omitHidden=true',
-    {
+  const [req, req2] = await Promise.all([
+    fetch(process.env.BOT_ENDPOINT + '/bot/counts?omitHidden=true', {
       headers: { Authorization: 'super secret' },
-    },
-  );
-  const counts = await req.json();
+    }),
+    fetch(process.env.BOT_ENDPOINT + '/bot/usage', {
+      headers: { Authorization: 'super secret' },
+    }),
+  ]);
+
+  const [counts, usageCounts] = await Promise.all([req.json(), req2.json()]);
 
   await connect(() => {})();
   const text = await Content.countDocuments({});
@@ -101,11 +111,12 @@ export async function getStaticProps() {
   const alerts = await Alert.find({}).sort({ createdAt: -1 }).limit(5);
 
   return {
-    revalidate: 30,
+    revalidate: 300,
     props: {
       counts: {
         ...counts,
-        text,
+        commandUses: usageCounts.commands,
+        listenerUses: usageCounts.listeners,
       },
       alerts: alerts.map((a) => a.message),
     },

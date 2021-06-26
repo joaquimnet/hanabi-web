@@ -9,24 +9,24 @@ import { useRouter } from 'next/router';
 import { NextSeo } from 'next-seo';
 
 import connect from '../../../middleware/mongodb';
-import CommandModelV1 from '../../../models/command.model.v1';
+import ListenerModelV1 from '../../../models/listener.model.v1';
 
 import { Main } from '../../../components/Main';
 import { Card } from '../../../components/Card';
 import { DashboardLinks } from '../../../components/DashboardLinks';
 
-const CommandList = ({ commands }) => {
+const ListenerList = ({ listeners }) => {
   const { push } = useRouter();
   return (
     <Main minHeight="100vh" pt="4rem" pb="8rem">
       <NextSeo
-        title="Hanabi - Commands"
-        description={`Hanabi will bring life to your server with her ${commands.length} commands.`}
-        canonical={`https://www.hanabi-bot.com/dashboard/commands`}
+        title="Hanabi - Listeners"
+        description={`Hanabi will bring life to your server with her ${listeners.length} listeners.`}
+        canonical={`https://www.hanabi-bot.com/dashboard/listeners`}
         openGraph={{
-          title: 'Hanabi - Commands',
-          description: `Hanabi will bring life to your server with her ${commands.length} commands.`,
-          url: `https://www.hanabi-bot.com/dashboard/commands`,
+          title: 'Hanabi - Listeners',
+          description: `Hanabi will bring life to your server with her ${listeners.length} listeners.`,
+          url: `https://www.hanabi-bot.com/dashboard/listeners`,
           images: [
             {
               url: 'https://i.imgur.com/eVACxCm.png',
@@ -69,29 +69,15 @@ const CommandList = ({ commands }) => {
         Commands
       </Text>
       <SimpleGrid columns={[1, 2]} spacing={4}>
-        {commands.map((command) => (
+        {listeners.map((listener) => (
           <Card
-            key={'cmd-' + command._id}
+            key={'cmd-' + listener._id}
             p={5}
             height="auto"
-            href={`/dashboard/commands/${command.name}`}
+            href={`/dashboard/listeners/${listener.slug}`}
           >
-            <Heading fontSize="xl">{command.name}</Heading>
-            <Text mt={4}>
-              {command.description
-                .split('\n')
-                .map((l) => [l, <br key={Math.random()} />])
-                .flat()}
-            </Text>
-            <Text
-              mt={1}
-              fontWeight="bold"
-              position="absolute"
-              right="8px"
-              top="1rem"
-            >
-              {command.category}
-            </Text>
+            <Heading fontSize="xl">{listener.slug}</Heading>
+            <Text mt={4}>{listener.name}</Text>
           </Card>
         ))}
       </SimpleGrid>
@@ -102,17 +88,17 @@ const CommandList = ({ commands }) => {
 export async function getStaticProps() {
   await connect(() => {})();
 
-  const commands = await CommandModelV1.find({ hidden: false }).sort({
+  const listeners = await ListenerModelV1.find({}).sort({
     category: 1,
-    name: 1,
+    slug: 1,
   });
 
   return {
     revalidate: 300,
     props: {
-      commands: JSON.parse(JSON.stringify(commands)),
+      listeners: JSON.parse(JSON.stringify(listeners)),
     },
   };
 }
 
-export default CommandList;
+export default ListenerList;

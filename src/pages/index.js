@@ -9,17 +9,27 @@ import {
 } from '@chakra-ui/react';
 import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { Hero } from '../components/Hero';
 import { Container } from '../components/Container';
 import { Main } from '../components/Main';
 import { CTA } from '../components/CTA';
 import { Footer } from '../components/Footer';
+import hanabi from '../../public/hanabi.png';
 
 const Home = () => (
   <Container minHeight="100vh">
     <Hero title="Hanabi" />
-    <Main pt="8rem">
+      <Main pt="0">
+        <Flex w={256} m="auto">
+          <Image
+            src={hanabi}
+            width={256}
+            height={256}
+            alt="Hanabi's Profile Picture"
+          />
+        </Flex>
       <Text fontSize="xl">
         Empathetic bot with concepts of currency / trading and gifs.
       </Text>

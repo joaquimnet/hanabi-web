@@ -1,7 +1,7 @@
 import { Text, SimpleGrid } from '@chakra-ui/react';
 import { NextSeo } from 'next-seo';
 
-import Content from '../../models/text';
+// import Content from '../../models/text';
 import Alert from '../../models/alert';
 import connect from '../../middleware/mongodb';
 
@@ -106,7 +106,7 @@ export async function getStaticProps() {
   const [counts, usageCounts] = await Promise.all([req.json(), req2.json()]);
 
   await connect(() => {})();
-  const text = await Content.countDocuments({});
+  // const text = await Content.countDocuments({});
 
   const alerts = await Alert.find({}).sort({ createdAt: -1 }).limit(5);
 

@@ -40,15 +40,12 @@ export const ServerCountChart = () => {
             'June 2021',
             'July 2021',
             'August 2021',
-            // 'September 2021',
+            'September 2021',
           ],
           datasets: [
             {
               label: '# of Servers',
-              data: [
-                1, 4, 25, 52,
-                // 55
-              ],
+              data: [1, 4, 25, 52, 78],
               backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -56,6 +53,7 @@ export const ServerCountChart = () => {
                 'rgba(75, 192, 192, 0.2)',
                 'rgba(153, 102, 255, 0.2)',
                 'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 99, 132, 0.2)',
               ],
               borderColor: [
                 'rgba(255, 99, 132, 1)',
@@ -64,6 +62,7 @@ export const ServerCountChart = () => {
                 'rgba(75, 192, 192, 1)',
                 'rgba(153, 102, 255, 1)',
                 'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
               ],
               borderWidth: 1,
             },
